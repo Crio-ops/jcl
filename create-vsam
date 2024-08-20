@@ -1,0 +1,47 @@
+//Z54128C      JOB  VSAM0000,,NOTIFY=&SYSUID             
+//DELETE       EXEC PGM=IDCAMS                           
+//SYSPRINT     DD   SYSOUT=*                             
+//SYSIN        DD   *                                    
+               DELETE Z54128.COURSE.DATA.VSAM.EMP1 -     
+                      PURGE -                            
+                      CLUSTER                            
+/*                                                       
+//CREATE       EXEC PGM=IDCAMS                           
+//SYSPRINT     DD   SYSOUT=*                             
+//SYSIN        DD   *                                    
+     DEFINE CLUSTER (NAME(Z54128.COURSE.DATA.VSAM.EMP1) -
+            CYLINDERS(1 1) -                             
+            KEYS(5 0) - 
+             RECORDSIZE(78 78) -                              
+             ) -                                              
+             DATA (NAME(Z54128.COURSE.DATA.VSAM.EMP1.DATA) -  
+             ) -                                              
+               INDEX (NAME(Z54128.COURSE.DATA.VSAM.EMP1.IDX) -
+                         )                                    
+ /*                                                           
+ //FILL         EXEC PGM=IDCAMS                               
+ //SYSPRINT     DD   SYSOUT=*                                 
+ //SYSIN        DD   *                                        
+     REPRO INDATASET(Z54128.DATA.EMP) -                       
+            OUTDATASET(Z54128.COURSE.DATA.VSAM.EMP1)          
+ /*                                                           
+ //ALTID1       EXEC PGM=IDCAMS                               
+ //SYSPRINT     DD   SYSOUT=*                                 
+ //SYSIN        DD   *                                       
+   DEFINE ALTERNATEINDEX (NAME(Z54128.COURSE.DATA.VSAM.EMP1.NAME.AIX) - 
+           RELATE(Z54128.COURSE.DATA.VSAM.EMP1) -                       
+           CYLINDERS(1 1) -                                             
+           KEYS(20 5) -                                                 
+           NONUNIQUEKEY -                                               
+            ) -                                                         
+             DATA (NAME(Z54128.COURSE.DATA.VSAM.EMP1.NAME.AIX.DATA) -   
+             ) -                                                        
+             INDEX (NAME(Z54128.COURSE.DATA.VSAM.EMP1.NAME.AIX.INDEX) - 
+             )                                                          
+      DEFINE PATH (NAME(Z54128.COURSE.DATA.VSAM.EMP1.NAME.PATH) -       
+             PATHENTRY(Z54128.COURSE.DATA.VSAM.EMP1.NAME.AIX) -         
+             )                                                          
+     BLDINDEX INDATASET(Z54128.COURSE.DATA.VSAM.EMP1) -    
+              OUTDATASET(Z54128.COURSE.DATA.VSAM.EMP1.NAME.AIX)   
+/*                                                                                                              
+
